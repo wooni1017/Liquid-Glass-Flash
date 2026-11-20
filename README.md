@@ -6,23 +6,23 @@
 
 `WebGL2 / WebGPU` · `60/120 FPS Video` · `React & Vanilla JS` · `SVG & Variable Fonts` · `Zero Dependencies` · `MIT`
 
-[English](https://www.google.com/search?q=%23english) · [한국어](https://www.google.com/search?q=%23%ED%95%9C%EA%B5%AD%EC%96%B4)
+[English](#english) · [한국어](#한국어)
 
 ### Live Motion Preview
 
-| Gooey Metaball Merge | Real-Time Shape Morphing | 
-| ----- | ----- | 
-|  |  | 
+| Gooey Metaball Merge | Real-Time Shape Morphing |
+| :---: | :---: |
+| ![Gooey Metaball Merge](docs/images/demo-gooey.gif) | ![Shape Morphing](docs/images/demo-morph.gif) |
 
 ### Visual Gallery
 
-| Sculpted 3D Vector / Font | Plate Mode (Video Titles) | 
-| ----- | ----- | 
-|  |  | 
+| Sculpted 3D Vector / Font | Plate Mode (Video Titles) |
+| :---: | :---: |
+| ![Sculpted 3D Vector Glass](docs/images/gallery-sculpted.png) | ![Plate Mode Video Glass](docs/images/gallery-plate.png) |
 
-| Boolean Cutout (Donut) | Optical Edge Refraction | 
-| ----- | ----- | 
-|  |  | 
+| Boolean Cutout (Donut) | Optical Edge Refraction |
+| :---: | :---: |
+| ![Boolean Cutout Donut](docs/images/gallery-donut.png) | ![Optical Edge Refraction](docs/images/gallery-refraction.png) | 
 
 ## English
 
