@@ -1,4 +1,4 @@
-# Liquid-Glass-Flash
+﻿# Liquid-Glass-Flash
 
 **Real-time 60/120 FPS Liquid Glass for Web & React — Zero Dependencies**
 
@@ -84,8 +84,9 @@ export function App() {
           rect={[160, 100, 640, 340]}
           profile="plate"
           preset="regular"
-          frost={12}
-          tint="#FFFFFF/12"
+          dispersion={100}
+          frost={18}
+          lightIntensity={100}
         />
       </GlassScene>
     </>
@@ -184,8 +185,9 @@ export function App() {
           rect={[160, 100, 640, 340]}
           profile="plate"
           preset="regular"
-          frost={12}
-          tint="#FFFFFF/12"
+          dispersion={100}
+          frost={18}
+          lightIntensity={100}
         />
       </GlassScene>
     </>
