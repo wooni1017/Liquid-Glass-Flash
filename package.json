@@ -1,0 +1,18 @@
+{
+  "name": "figma-liquid-glass",
+  "version": "4.0.0",
+  "type": "module",
+  "description": "Clean-Slate Declarative Liquid Glass Framework (6 Figma Physical Laws, 18x18 Tile Shared-Memory WGSL, Gooey/Morph/Boolean/Text SDF, Zero-Copy 120 FPS Video)",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./react": {
+      "import": "./src/react.js"
+    },
+    "./webgl": "./src/webgl-renderer.js"
+  }
+}
