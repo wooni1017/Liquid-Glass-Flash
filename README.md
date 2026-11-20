@@ -7,6 +7,22 @@
 
 [English](#english) · [한국어](#한국어)
 
+### Live Motion Preview
+
+| Gooey Metaball Merge | Real-Time Shape Morphing |
+| :---: | :---: |
+| ![Gooey Metaball Merge](docs/images/demo-gooey.gif) | ![Shape Morphing](docs/images/demo-morph.gif) |
+
+### Visual Gallery
+
+| Sculpted 3D Vector / Font | Plate Mode (Video Titles) |
+| :---: | :---: |
+| ![Sculpted 3D Vector Glass](docs/images/gallery-sculpted.png) | ![Plate Mode Video Glass](docs/images/gallery-plate.png) |
+
+| Boolean Cutout (Donut) | Optical Edge Refraction |
+| :---: | :---: |
+| ![Boolean Cutout Donut](docs/images/gallery-donut.png) | ![Optical Edge Refraction](docs/images/gallery-refraction.png) |
+
 ---
 
 ## English
@@ -25,7 +41,7 @@
 ### Installation
 
 ```bash
-npm install github:<your-username>/Liquid-Glass-Flash
+npm install github:wooni1017/Liquid-Glass-Flash
 ```
 
 ### Quick Start (React)
@@ -119,7 +135,7 @@ renderer.render(scene, backdropElement);
 ### 설치
 
 ```bash
-npm install github:<본인아이디>/Liquid-Glass-Flash
+npm install github:wooni1017/Liquid-Glass-Flash
 ```
 
 ### 빠른 시작 (React)
