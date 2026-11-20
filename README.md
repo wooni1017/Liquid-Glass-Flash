@@ -1,86 +1,142 @@
 # Liquid-Glass-Flash
 
-**Zero-Dependency, 120 FPS Figma-Calibrated Liquid Glass for Web & React**  
-**웹과 React를 위한 무의존성 · 120 FPS 피그마 물리 동치 리퀴드 글래스 프레임워크**
+**Real-time 60/120 FPS Liquid Glass for Web & React — Zero Dependencies**  
+**웹과 React를 위한 무의존성 · 60/120 FPS 실시간 리퀴드 글래스 라이브러리**
 
-`WebGL2 / WebGPU · 60/120 FPS` · `Figma Parity · MAE 0.000` · `Zero Dependencies` · `Variable Fonts · ∂Ω Exact SDF` · `MIT License`
+`WebGL2 / WebGPU` · `60/120 FPS Video` · `React & Vanilla JS` · `SVG & Variable Fonts` · `Zero Dependencies` · `MIT`
 
-**[🇺🇸 English](#-english)** · **[🇰🇷 한국어](#-한국어)**
+[English](#english) · [한국어](#한국어)
 
------ | ----- | ----- | ----- | 
-| `shape` | `'rect(r)' | 'capsule' | 'circle' | 'star' | 'triangle' | 'hexagon' | { svg } | { text, font }` | `'capsule'` | Primitive, SVG path, or OpenType font glyph | 
-| `profile` | `'sculpted' | 'plate'` | `'sculpted'` | `sculpted`: 3D per-stroke lens · `plate`: flat-center Figma video lens | 
-| `preset` | `'regular' | 'clear' | 'identity'` | `'regular'` | Base material preset (`clear` sets `frost = 0`) | 
-| `refraction` | `0 – 100` | `100` | Optical bending strength | 
-| `depth` | `0 – 100` | `100` | Bevel depth ($D = \max(\text{depth} \times 0.30, 1.0)\text{px}$) | 
-| `dispersion` | `0 – 100` | `20` | Symmetric RGB chromatic aberration (`+10% / 0% / -10%`) | 
-| `frost` | `0 – 60` | `4` | Pre-blur radius ($\sigma = \sqrt{0.65^2 + (0.425 \cdot \text{frost})^2}$) | 
-| `splay` | `0 – 100` | `100` | Blend between edge normal and radial center direction | 
-| `lightAngle` | `-180° – 180°` | `-45°` | Screen-space directional light angle | 
-| `lightIntensity` | `0 – 100` | `80` | 1px specular lip & bevel shade intensity | 
-| `tint` | `'#RRGGBB/opacity'` | `'#FFFFFF/0'` | Fill color blended over the specular lip | 
+---
 
-### Package Structure
+## English
 
-```
-Liquid-Glass-Flash/
-├── src/
-│   ├── react.js            # <GlassScene>, <GlassGroup>, <Glass> (WebGL2 auto-mounted)
-│   ├── webgl-renderer.js   # Zero-dependency WebGL2 runtime renderer
-│   ├── index.js / .d.ts    # Declarative IR compiler, presets & TypeScript types
-│   ├── bezier-sdf.js       # SVG/OpenType parser + exact ∂Ω topological boundary extractor
-│   └── lib.rs              # Native / Wasm WebGPU engine (optional)
-├── shaders/
-│   ├── figma_glass.wgsl    # Original calibrated 6-law WGSL (bit-exact reference)
-│   └── bezier_sdf.wgsl     # WebGPU analytic quadratic Bézier SDF compute shader
-└── tests/
-    ├── golden_diff_test.py # Bit-exact SHA-256 & 9-mode visual regression suite
-    └── stress_fuzz_test.py # 4 math audits + 12 torture stress tests + 30 fuzz scenes
+**Liquid-Glass-Flash** brings physical Liquid Glass optics — smooth edge refraction, chromatic dispersion, directional specular rims, and frosted glass blur — to the browser with a clean, SwiftUI-inspired declarative API.
 
+### Features
+
+- **Physical Glass Optics** — Real-time refraction, RGB chromatic dispersion, directional 1px specular highlights, and frosted backdrop blur.
+- **Declarative Presets + Numeric Control** — Start with `regular`, `clear`, or `identity` presets and fine-tune any property on a `0–100` scale.
+- **Gooey, Morph & Boolean Shapes** — Merge glass shapes like liquid droplets (`<GlassGroup gooey>`), morph smoothly between primitives, or cut out holes.
+- **Crisp Vector SVG & Variable Fonts** — Analytic Bézier rendering for any SVG path or OpenType font, including overlapping Variable Fonts (`Google Sans`, `Inter`, `Pretendard`, CJK).
+- **Two Text & Vector Profiles** — Choose `sculpted` for 3D pillowy glass lettering or `plate` for clean, high-legibility titles and subtitles over video.
+- **60 / 120 FPS Over Live Video** — Built-in `<video>` frame sync and cached blur pipeline with zero external dependencies.
+
+### Installation
+
+```bash
+npm install github:<your-username>/Liquid-Glass-Flash
 ```
 
-## 🇰🇷 한국어
+### Quick Start (React)
 
-### Liquid-Glass-Flash 소개
-
-CSS `backdrop-filter: blur()`는 배경을 흐리게만 만들 뿐 유리 굴절을 구현하지 못합니다. **Liquid-Glass-Flash**는 피그마 리퀴드 글래스의 6대 광학 물리 법칙(방사형 Splay 굴절, $u^{3.5}$ 베벨 곡률, RGB 3채널 색수차, 1px 지향성 스페큘러 립)을 **SwiftUI처럼 간단한 선언형 문법**과 **별도 빌드 없는 무의존성 모듈**로 웹과 React에 바로 얹을 수 있는 프레임워크입니다.
-
-* **원본 피그마 100% 비트 동치 (`MAE = 0.000`)** — 기본 6종 도형(`rect`, `capsule`, `circle`, `star`, `triangle`, `hexagon`)에서 원본 `shaders/figma_glass.wgsl` 수식을 그대로 보존합니다.
-
-* **해석적 베지어 SDF + 위상 경계 추출(**$\partial\Omega$**)** — Google Sans·Inter·Pretendard 같은 가변 폰트와 한글·SVG에서 겹침(`P`/`T`), 맞닿음(`A`), 자기교차(`e`) 내부 이음새를 수학적으로 완전히 제거합니다.
-
-* **두 가지 텍스트/벡터 프로필** — 모든 획이 입체 렌즈로 굴절되는 `profile="sculpted"`와, 영상 자막·타이틀에서 중앙 가독성을 유지하고 외곽만 완만하게 굴절시키는 `profile="plate"`를 옵션 하나로 전환합니다.
-
-* **Gooey 합체 · 모핑 · 불리언 도넛** — `<GlassGroup gooey>` 메타볼 합체, 도형 모핑, 불리언 차집합을 특이점 없는 $C^\infty$ 연속 법선으로 처리합니다.
-
-* **실시간 `<video>` 위 60 / 120 FPS** — Dirty-Cached 2-Pass 가우시안 블러, 초기화 1회 유니폼 캐싱, `requestVideoFrameCallback` 프레임 동기화를 내장했습니다.
-
-### 설치 방법
-
-Rust나 별도 빌드 도구 없이 GitHub에서 바로 설치할 수 있습니다.
-
-```
-npm install github:<본인아이디>/Liquid-Glass-Flash
-
-```
-
-### 빠른 시작
-
-#### React에서 바로 쓰기
-
-```
+```jsx
 import { useRef } from 'react';
 import { GlassScene, Glass, GlassGroup } from 'figma-liquid-glass/react';
 
-export function Hero() {
+export function App() {
   const videoRef = useRef(null);
 
   return (
     <>
-      <video ref={videoRef} src="/backdrop.mp4" autoPlay loop muted playsInline hidden />
+      <video ref={videoRef} src="/bg.mp4" autoPlay loop muted playsInline hidden />
 
       <GlassScene backdrop={videoRef} width={960} height={540} fps={120}>
-        {/* 프리셋 + 수치 미세 조정 */}
+        {/* Single glass pill */}
+        <Glass
+          shape="capsule"
+          rect={[240, 180, 480, 180]}
+          preset="regular"
+          frost={8}
+          dispersion={25}
+        />
+
+        {/* Gooey metaball merge */}
+        <GlassGroup gooey={32}>
+          <Glass shape="capsule" rect={[260, 195, 260, 140]} preset="regular" />
+          <Glass shape="circle" rect={[495, 185, 170, 170]} preset="clear" tint="#FF2D55/20" />
+        </GlassGroup>
+
+        {/* Video-friendly glass text */}
+        <Glass
+          shape={{ text: 'Liquid Glass', font: loadedFont }}
+          rect={[160, 100, 640, 340]}
+          profile="plate"
+          preset="regular"
+          frost={12}
+          tint="#FFFFFF/12"
+        />
+      </GlassScene>
+    </>
+  );
+}
+```
+
+### Quick Start (Vanilla JS)
+
+```js
+import { compileSceneIR, createGlassRenderer } from 'figma-liquid-glass';
+
+const renderer = createGlassRenderer(document.querySelector('canvas'));
+const scene = compileSceneIR([
+  { shape: 'rect(32)', rect: [240, 110, 480, 320], preset: 'regular' },
+]);
+
+renderer.render(scene, backdropElement);
+```
+
+### Props & Options
+
+| Prop | Values | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `shape` | `'rect(r)'`, `'capsule'`, `'circle'`, `'star'`, `'triangle'`, `'hexagon'`, `{ svg }`, `{ text, font }` | `'capsule'` | Glass shape, SVG path, or font text |
+| `profile` | `'sculpted'`, `'plate'` | `'sculpted'` | `sculpted` for 3D glass strokes, `plate` for flat-center video titles |
+| `preset` | `'regular'`, `'clear'`, `'identity'` | `'regular'` | Base glass material preset |
+| `refraction` | `0 – 100` | `100` | Optical bending strength |
+| `depth` | `0 – 100` | `100` | Edge lens bevel depth |
+| `dispersion` | `0 – 100` | `20` | RGB chromatic aberration strength |
+| `frost` | `0 – 60` | `4` | Frosted backdrop blur amount |
+| `splay` | `0 – 100` | `100` | Radial lens splay factor |
+| `lightAngle` | `-180° – 180°` | `-45°` | Directional highlight angle |
+| `lightIntensity` | `0 – 100` | `80` | Rim highlight and bevel shading strength |
+| `tint` | `'#RRGGBB/opacity'` | `'#FFFFFF/0'` | Glass tint color and opacity percentage |
+
+---
+
+## 한국어
+
+**Liquid-Glass-Flash**는 부드러운 가장자리 굴절, RGB 색수차, 지향성 1px 유리 테두리, 프로스트 블러를 SwiftUI처럼 간결한 선언형 API로 웹과 React에 구현해 주는 무의존성 실시간 리퀴드 글래스 라이브러리입니다.
+
+### 주요 기능
+
+- **물리 기반 유리 광학** — 실시간 렌즈 굴절, 대칭 RGB 색수차, 1px 스페큘러 립, 프로스트 배경 블러를 지원합니다.
+- **프리셋 + 수치 미세 조정** — `regular`, `clear`, `identity` 프리셋을 기본으로 두고 모든 옵션을 `0–100` 수치로 세밀하게 조정할 수 있습니다.
+- **Gooey 합체 · 모핑 · 불리언** — 액체 방울처럼 합쳐지는 `<GlassGroup gooey>`, 도형 간 모핑, 도넛형 구멍 뚫기를 실시간으로 처리합니다.
+- **선명한 SVG 및 가변 폰트 지원** — 어떤 SVG 경로나 OpenType 폰트(`Google Sans`, `Inter`, `Pretendard`, 한글 포함)도 깨짐이나 내부 겹침선 없이 깔끔하게 렌더링합니다.
+- **두 가지 텍스트/벡터 프로필** — 입체적인 3D 유리 글자용 `sculpted`와, 영상 위 자막·타이틀 가독성에 맞춘 `plate` 모드를 옵션 하나로 전환합니다.
+- **실시간 영상 위 60 / 120 FPS** — `<video>` 프레임 자동 동기화와 캐시된 블러 파이프라인을 외부 의존성 없이 내장했습니다.
+
+### 설치
+
+```bash
+npm install github:<본인아이디>/Liquid-Glass-Flash
+```
+
+### 빠른 시작 (React)
+
+```jsx
+import { useRef } from 'react';
+import { GlassScene, Glass, GlassGroup } from 'figma-liquid-glass/react';
+
+export function App() {
+  const videoRef = useRef(null);
+
+  return (
+    <>
+      <video ref={videoRef} src="/bg.mp4" autoPlay loop muted playsInline hidden />
+
+      <GlassScene backdrop={videoRef} width={960} height={540} fps={120}>
+        {/* 단일 유리 캡슐 */}
         <Glass
           shape="capsule"
           rect={[240, 180, 480, 180]}
@@ -95,9 +151,9 @@ export function Hero() {
           <Glass shape="circle" rect={[495, 185, 170, 170]} preset="clear" tint="#FF2D55/20" />
         </GlassGroup>
 
-        {/* 영상 자막/타이틀용 피그마 평면(Plate) 텍스트 */}
+        {/* 영상 자막/타이틀용 유리 텍스트 */}
         <Glass
-          shape={{ text: '안녕하세요', font: loadedOpenTypeFont }}
+          shape={{ text: '안녕하세요', font: loadedFont }}
           rect={[160, 100, 640, 340]}
           profile="plate"
           preset="regular"
@@ -108,41 +164,39 @@ export function Hero() {
     </>
   );
 }
-
 ```
 
-#### Vanilla JS에서 바로 쓰기
+### 빠른 시작 (Vanilla JS)
 
-```
+```js
 import { compileSceneIR, createGlassRenderer } from 'figma-liquid-glass';
 
 const renderer = createGlassRenderer(document.querySelector('canvas'));
-const ir = compileSceneIR([
-  { shape: 'rect(32)', rect: [240, 110, 480, 320], preset: 'regular', depth: 100 },
+const scene = compileSceneIR([
+  { shape: 'rect(32)', rect: [240, 110, 480, 320], preset: 'regular' },
 ]);
 
-renderer.render(ir, backdropImageOrVideo);
-
+renderer.render(scene, backdropElement);
 ```
 
-### 주요 옵션 요약
+### 주요 옵션
 
-`regular` · `clear` · `identity` 프리셋을 기본으로 깔고, 필요한 수치만 `0~100` 범위로 덮어쓸 수 있습니다.
+| 속성 | 값 / 범위 | 기본값 | 설명 |
+| :--- | :--- | :--- | :--- |
+| `shape` | `'rect(r)'`, `'capsule'`, `'circle'`, `'star'`, `'triangle'`, `'hexagon'`, `{ svg }`, `{ text, font }` | `'capsule'` | 도형, SVG 경로 또는 폰트 텍스트 |
+| `profile` | `'sculpted'`, `'plate'` | `'sculpted'` | `sculpted`(입체 3D 획) 또는 `plate`(영상 타이틀용 평면 중앙) |
+| `preset` | `'regular'`, `'clear'`, `'identity'` | `'regular'` | 기본 유리 프리셋 |
+| `refraction` | `0 – 100` | `100` | 굴절 강도 |
+| `depth` | `0 – 100` | `100` | 가장자리 베벨 깊이 |
+| `dispersion` | `0 – 100` | `20` | RGB 색수차 강도 |
+| `frost` | `0 – 60` | `4` | 배경 프로스트 블러 강도 |
+| `splay` | `0 – 100` | `100` | 방사형 굴절 확산 비율 |
+| `lightAngle` | `-180° – 180°` | `-45°` | 광원 각도 |
+| `lightIntensity` | `0 – 100` | `80` | 1px 테두리 하이라이트 및 음영 세기 |
+| `tint` | `'#RRGGBB/opacity'` | `'#FFFFFF/0'` | 유리 틴트 색상 및 투명도(%) |
 
-| 속성 | 타입 / 범위 | 기본값 | 설명 | 
-| ----- | ----- | ----- | ----- | 
-| `shape` | `'rect(r)' | 'capsule' | 'circle' | 'star' | 'triangle' | 'hexagon' | { svg } | { text, font }` | `'capsule'` | 기본 도형, SVG 경로 또는 OpenType 폰트 텍스트 | 
-| `profile` | `'sculpted' | 'plate'` | `'sculpted'` | `sculpted`: 3D 입체 획 굴절 · `plate`: 피그마 평면·영상용 | 
-| `preset` | `'regular' | 'clear' | 'identity'` | `'regular'` | 기본 머티리얼 프리셋 (`clear`는 `frost = 0`) | 
-| `refraction` | `0 – 100` | `100` | 굴절 강도 | 
-| `depth` | `0 – 100` | `100` | 베벨 깊이 ($D = \max(\text{depth} \times 0.30, 1.0)\text{px}$) | 
-| `dispersion` | `0 – 100` | `20` | RGB 3채널 대칭 색수차 (`+10% / 0% / -10%`) | 
-| `frost` | `0 – 60` | `4` | 사전 블러 강도 ($\sigma = \sqrt{0.65^2 + (0.425 \cdot \text{frost})^2}$) | 
-| `splay` | `0 – 100` | `100` | 경계 법선과 중심 방사 방향 혼합 비율 | 
-| `lightAngle` | `-180° – 180°` | `-45°` | 화면 고정 광원 각도 | 
-| `lightIntensity` | `0 – 100` | `80` | 1px 테두리 하이라이트 및 베벨 음영 세기 | 
-| `tint` | `'#RRGGBB/opacity'` | `'#FFFFFF/0'` | 립 위에 올라가는 유리 틴트 색상 및 투명도 | 
+---
 
-### License
+## License
 
-MIT © Liquid-Glass-Flash Contributors
+MIT
